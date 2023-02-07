@@ -31,6 +31,7 @@ func main() {
 	wg.Wait()
 }
 
+// 获取Goroutine的ID
 func GetGid() (gid uint64) {
 	b := make([]byte, 64)
 	b = b[:runtime.Stack(b, false)]
