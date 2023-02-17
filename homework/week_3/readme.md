@@ -160,7 +160,9 @@ docker run -p 80:80 --name httpserver -itd optihack/httpserver:v1.0
 
 ### 10. 使用nsenter进入容器查看IP配置
 docker inspect cbbd4a2ca734 | grep -i pid
+
 export pid=14726
+
 nsenter -t 14726 -n ip a
 
 <img src="imgs/nsenter.png">
