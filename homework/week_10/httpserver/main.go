@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
@@ -76,6 +77,10 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	defer timer.ObserveTotal()
 
 	user := r.URL.Query().Get("user")
+
+	delay := randInt(10, 2000)
+	time.Sleep(time.Millisecond * time.Duration(delay))
+
 	if user != "" {
 		io.WriteString(w, fmt.Sprintf("hello [%s]\n", user))
 	} else {
@@ -100,6 +105,11 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 记录访问日志
 	record(w, r)
+}
+
+func randInt(min int, max int) int {
+	rand.Seed(time.Now().UTC().UnixNano())
+	return min + rand.Intn(max-min)
 }
 
 func record(w http.ResponseWriter, r *http.Request) {
